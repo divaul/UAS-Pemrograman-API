@@ -1,5 +1,8 @@
+#ofline
+#DATABASE_URL="postgresql://postgres:123@localhost:5432/uas_pemrograman_api"
 
-DATABASE_URL="postgresql://neondb_owner:npg_wBKGp1a7yLZj@ep-falling-resonance-a1cu3g4s-pooler.ap-southeast-1.aws.neon.tech/To%20do%20list%20UAS?sslmode=require&channel_binding=require"
+#online
+DATABASE_URL="postgresql://neondb_owner:npg_wBKGp1a7yLZj@ep-falling-resonance-a1cu3g4s-pooler.ap-southeast-1.aws.neon.tech/uas__pemrograman_api?sslmode=require&channel_binding=require"
 
 
 JWT_SECRET="gyfsuigebflsnmfeyefgbkjsjndfkhjbvuyse"
@@ -13,6 +16,4 @@ JWT_REFRESH_EXPIRES_IN="7d"      # Refresh token expired dalam 7 hari
 RATE_LIMIT_MAX_REQUESTS="100"    # Maksimal 100 request
 RATE_LIMIT_WINDOW_MS="900000"    # Per 15 menit (15 * 60 * 1000 ms)
 
-
-NODE_ENV="development"
 
