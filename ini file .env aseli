@@ -1,0 +1,18 @@
+
+DATABASE_URL="postgresql://postgres:123@localhost:5432/uas_pemrograman_api"
+
+
+JWT_SECRET="gyfsuigebflsnmfeyefgbkjsjndfkhjbvuyse"
+JWT_REFRESH_SECRET="gnmsrpl;ihngosinefgl;snfeughfuosemflsdgbyui"
+
+
+JWT_ACCESS_EXPIRES_IN="15m"      # Access token expired dalam 15 menit
+JWT_REFRESH_EXPIRES_IN="7d"      # Refresh token expired dalam 7 hari
+
+
+RATE_LIMIT_MAX_REQUESTS="100"    # Maksimal 100 request
+RATE_LIMIT_WINDOW_MS="900000"    # Per 15 menit (15 * 60 * 1000 ms)
+
+
+NODE_ENV="development"
+
