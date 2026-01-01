@@ -1,0 +1,67 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enum untuk Role pengguna
+enum Role {
+  User   // User biasa
+  Admin  // Administrator dengan akses penuh
+}
+
+// Enum untuk Status task
+enum TaskStatus {
+  PENDING      // Tugas belum dikerjakan
+  IN_PROGRESS  // Sedang dikerjakan
+  COMPLETED    // Selesai
+  CANCELLED    // Dibatalkan
+}
+
+// Enum untuk Priority task
+enum Priority {
+  LOW     // Prioritas rendah
+  MEDIUM  // Prioritas sedang
+  HIGH    // Prioritas tinggi
+  URGENT  // Prioritas mendesak
+}
+
+// Model User
+// Menyimpan data pengguna yang terdaftar
+model User {
+  id        String   @id @default(uuid())
+  name      String   // Nama lengkap user
+  email     String   @unique // Email harus unique
+  password  String   // Password yang sudah di-hash dengan bcrypt
+  role      Role     @default(User) // Default role adalah User
+  tasks     Task[]   // Relasi one-to-many dengan Task
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users") // Nama tabel di database
+}
+
+// Model Task
+// Menyimpan data tugas/to-do
+model Task {
+  id          String     @id @default(uuid())
+  title       String     // Judul task (required)
+  description String?    // Deskripsi task (optional)
+  status      TaskStatus @default(PENDING) // Status default: PENDING
+  priority    Priority   @default(MEDIUM)  // Priority default: MEDIUM
+  dueDate     DateTime?  // Tanggal deadline (optional)
+  userId      String     // Foreign key ke User
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade) // Relasi ke User
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([userId]) // Index untuk query yang filter by userId
+  @@index([status]) // Index untuk query yang filter by status
+  @@map("tasks")    // Nama tabel di database
+}
+
