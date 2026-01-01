@@ -14,57 +14,64 @@ datasource db {
 
 // Enum untuk Role pengguna
 enum Role {
-  User   
-  Admin  
+  User   // User biasa
+  Admin  // Administrator dengan akses penuh
 }
 
 // Enum untuk Status task
 enum TaskStatus {
-  PENDING      
-  IN_PROGRESS  
-  COMPLETED    
-  CANCELLED    
+  PENDING      // Tugas belum dikerjakan
+  IN_PROGRESS  // Sedang dikerjakan
+  COMPLETED    // Selesai
+  CANCELLED    // Dibatalkan
 }
 
 // Enum untuk Priority task
 enum Priority {
-  LOW     
-  MEDIUM  
-  HIGH    
-  URGENT  
+  LOW     // Prioritas rendah
+  MEDIUM  // Prioritas sedang
+  HIGH    // Prioritas tinggi
+  URGENT  // Prioritas mendesak
 }
 
 // Model User
 // Menyimpan data pengguna yang terdaftar
 model User {
   id        String   @id @default(uuid())
-  name      String   
-  email     String   @unique
-  password  String   
-  role      Role     @default(User) 
-  tasks     Task[]   
+  name      String   // Nama lengkap user
+  email     String   @unique // Email harus unique
+  password  String   // Password yang sudah di-hash dengan bcrypt
+  role      Role     @default(User) // Default role adalah User
+  tasks     Task[]   // Relasi one-to-many dengan Task
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users") 
+  @@map("users") // Nama tabel di database
 }
 
 // Model Task
 // Menyimpan data tugas/to-do
 model Task {
   id          String     @id @default(uuid())
-  title       String    
-  description String?   
-  status      TaskStatus @default(PENDING)
-  priority    Priority   @default(MEDIUM)  
-  dueDate     DateTime?  
-  userId      String     
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade) 
+  title       String     // Judul task (required)
+  description String?    // Deskripsi task (optional)
+  status      TaskStatus @default(PENDING) // Status default: PENDING
+  priority    Priority   @default(MEDIUM)  // Priority default: MEDIUM
+  dueDate     DateTime?  // Tanggal deadline (optional)
+  userId      String     // Foreign key ke User
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade) // Relasi ke User
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
-  @@index([userId]) 
-  @@index([status]) 
-  @@map("tasks")    
+  @@index([userId]) // Index untuk query yang filter by userId
+  @@index([status]) // Index untuk query yang filter by status
+  @@map("tasks")    // Nama tabel di database
 }
 
+// Catatan:
+// 1. @id @default(uuid()) = Primary key dengan UUID auto-generate
+// 2. @unique = Nilai harus unik di seluruh tabel
+// 3. @default() = Nilai default jika tidak diisi
+// 4. onDelete: Cascade = Jika user dihapus, tasks-nya ikut terhapus
+// 5. @@index = Membuat index untuk mempercepat query
+// 6. @@map = Mengatur nama tabel di database
