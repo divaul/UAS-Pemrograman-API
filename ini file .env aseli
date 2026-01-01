@@ -1,5 +1,5 @@
 
-DATABASE_URL="postgresql://postgres:123@localhost:5432/uas_pemrograman_api"
+DATABASE_URL="postgresql://neondb_owner:npg_wBKGp1a7yLZj@ep-falling-resonance-a1cu3g4s-pooler.ap-southeast-1.aws.neon.tech/To%20do%20list%20UAS?sslmode=require&channel_binding=require"
 
 
 JWT_SECRET="gyfsuigebflsnmfeyefgbkjsjndfkhjbvuyse"
